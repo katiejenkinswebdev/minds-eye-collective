@@ -39,9 +39,10 @@ export default function Page() {
   return (
     <>
       <header className={styles.header}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         {/* viewBox is 400x100, so 46px tall is 184px wide. Both set so the
-            header reserves space and does not shift as the SVG loads. */}
+            header reserves space and does not shift as the SVG loads.
+            next/image does not optimize SVG, so a plain img is correct here. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className={styles.lockup}
           src="/logos/lockup-horizontal-dark.svg"
