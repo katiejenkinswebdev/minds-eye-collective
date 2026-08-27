@@ -18,10 +18,20 @@ form still returns success and logs the submission to the server console instead
 of persisting it, so the whole page is testable keyless.
 
 ```bash
+npm run qa       # lint, typecheck, build, brand check
 npm run build    # production build
-npx tsc --noEmit # typecheck
-npx eslint .     # lint
+npm run typecheck
+npm run lint
+npm run shots    # screenshots at 375 / 768 / 1440 into test-output/
 ```
+
+`npm run qa` ends with `scripts/check-brand.sh`, which reads the CSS that
+actually shipped and fails if Iris, Bloom or Ether is used as a text color. It
+also fails when it finds no built CSS or no color declarations, so pointing it at
+the wrong path cannot read as a pass.
+
+`npm run shots` needs the dev or production server already running, and drives
+the installed Chrome. Override with `CHROME_PATH` if yours lives elsewhere.
 
 ## What works right now
 

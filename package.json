@@ -1,12 +1,15 @@
 {
-  "name": "site",
+  "name": "minds-eye-collective",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "qa": "npm run lint && npm run typecheck && npm run build && bash scripts/check-brand.sh",
+    "shots": "tsx scripts/shots.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
@@ -22,6 +25,8 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^16.3.3",
+    "puppeteer-core": "^25.9.0",
+    "tsx": "^4.23.12",
     "typescript": "^5"
   }
 }
