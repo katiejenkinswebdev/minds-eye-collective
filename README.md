@@ -32,16 +32,23 @@ pass.
 `npm run shots` needs a server already running and drives the installed Chrome.
 Override with `CHROME_PATH` if yours lives elsewhere.
 
-## Status: complete and verified, not yet deployed
+## Status: live at https://mindseyecollective.ai
 
-Everything in the handoff is built. What remains is account setup and the
-deploy, none of which can happen from this repo alone. See "Going live" below.
+Deployed on Vercel under the `minds-eye-collective` team, on the apex domain
+with `www` redirecting to it. DNS is at Hover; only the two A records point at
+Vercel, so the MX and Resend records are unaffected.
 
-**Verified:**
+**Still outstanding:** `RESEND_API_KEY` is not set, so a lead is stored in
+Supabase but sends no notification email. Use `npm run leads` to see captured
+leads until that is wired up.
 
-- Lighthouse **99 performance / 100 accessibility / 100 best practices / 100 SEO**
-  against the production build. Lighthouse runs mobile emulation by default, so
-  these are mobile scores.
+**Verified against the live domain:**
+
+- Lighthouse **100 / 100 / 100 / 100** against https://mindseyecollective.ai.
+  Lighthouse runs mobile emulation by default, so these are mobile scores.
+- `npm run e2e` passes against the live domain: a real browser submission
+  reaches Supabase and is cleaned up.
+- SSL via Let's Encrypt, `http` to `https` 308, `www` to apex 308.
 - **No horizontal overflow at 320, 360, 375, 390, 414, 480, 560 or 768px**, and
   no form field under 16px at any touch width.
 - 21 end-to-end API checks pass, covering validation, honeypot, rate limiting,
