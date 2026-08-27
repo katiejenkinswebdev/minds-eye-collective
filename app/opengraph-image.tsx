@@ -6,10 +6,8 @@ export const contentType = "image/png";
 export const alt = `${SITE.name} — custom AI systems and enablement`;
 
 /**
- * Prism mark on Void with the glow radial, per README.md's OG spec.
- *
- * The eye contour here is the same placeholder as prism-mark.tsx and must be
- * regenerated once the real brand geometry is wired in.
+ * Prism mark on Void with the glow radial, per README.md's OG spec. Geometry
+ * matches prism-mark.tsx, which is transcribed from the design file's hero.
  */
 export default function OpengraphImage() {
   return new ImageResponse(
@@ -55,10 +53,11 @@ export default function OpengraphImage() {
             opacity="0.5"
           />
           <path
-            d="M 10 60 Q 60 18 110 60 Q 60 102 10 60 Z"
+            d="M 10 60 C 38 26, 82 26, 110 60 C 82 94, 38 94, 10 60 Z"
             fill="none"
             stroke="#F6F5FB"
             strokeWidth="5"
+            strokeLinejoin="round"
           />
           <circle cx="60" cy="60" r="17" fill="url(#og-pupil)" />
         </svg>

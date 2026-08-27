@@ -130,16 +130,17 @@ export function ContactForm() {
         />
       </div>
 
+      <button className={styles.submit} type="submit" disabled={sending}>
+        {sending ? "Sending…" : "Get in Touch"}
+      </button>
+
+      {/* Below the button, matching the design file's order. */}
       {status === "error" && (
         <p role="alert" className={styles.error}>
           Something went wrong sending your message. Please try again, or email{" "}
           {SITE.contactEmail} directly.
         </p>
       )}
-
-      <button className={styles.submit} type="submit" disabled={sending}>
-        {sending ? "Sending…" : "Get in Touch"}
-      </button>
     </form>
   );
 }

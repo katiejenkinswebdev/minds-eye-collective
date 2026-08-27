@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "qa": "npm run lint && npm run typecheck && npm run build && bash scripts/check-brand.sh",
-    "shots": "tsx scripts/shots.ts"
+    "shots": "tsx scripts/shots.ts",
+    "compare": "tsx scripts/compare.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
@@ -21,10 +22,13 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/pngjs": "^6.0.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^16.3.3",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
     "puppeteer-core": "^25.9.0",
     "tsx": "^4.23.12",
     "typescript": "^5"

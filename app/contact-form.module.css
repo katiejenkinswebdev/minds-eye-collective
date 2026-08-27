@@ -32,16 +32,16 @@
   min-height: 44px;
   padding: 0 14px;
   border-radius: 4px;
-  border: 1px solid var(--mec-border-field);
-  background: var(--mec-fill-field);
-  color: var(--mec-text-dark-bg);
+  border: 1px solid var(--page-border-field);
+  background: var(--page-fill-field);
+  color: var(--mec-paper);
   font-size: 15px;
   font-family: inherit;
   width: 100%;
 }
 
 .input:focus-visible {
-  outline: 2px solid var(--mec-accent-dark-bg);
+  outline: 2px solid var(--mec-iris-light);
   outline-offset: 1px;
 }
 
@@ -62,7 +62,7 @@
 .error {
   font-size: 14px;
   line-height: 1.5;
-  color: var(--mec-error);
+  color: var(--page-error);
 }
 
 .submit {
@@ -74,12 +74,13 @@
   color: var(--mec-void);
   font-size: 15px;
   font-weight: 600;
+  letter-spacing: 0.05em;
   cursor: pointer;
   transition: background-color 200ms ease;
 }
 
 .submit:hover:not(:disabled) {
-  background: var(--mec-paper-hover);
+  background: var(--mec-haze);
 }
 
 .submit:disabled {
@@ -88,14 +89,14 @@
 }
 
 .submit:focus-visible {
-  outline: 2px solid var(--mec-accent-dark-bg);
+  outline: 2px solid var(--mec-iris-light);
   outline-offset: 3px;
 }
 
 .success {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .successText {

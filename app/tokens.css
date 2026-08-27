@@ -1,0 +1,37 @@
+/* Minds Eye Collective — Identity v2.1 "Prism" */
+:root {
+  /* Core */
+  --mec-void: #0E0C24;        /* primary dark surface */
+  --mec-depth: #3E3480;       /* secondary */
+  --mec-iris: #8B7CF0;        /* accent — surfaces/UI only, never text */
+  --mec-bloom: #C05CD6;       /* psychedelic accent — decorative only */
+  --mec-ether: #3EC8D8;       /* cool spark — decorative only */
+  --mec-haze: #C9C3F2;        /* tint */
+  --mec-paper: #F6F5FB;       /* light surface */
+  --mec-ink: #1C1936;         /* body text on light */
+
+  /* Text-safe variants (WCAG AA+) */
+  --mec-iris-ink: #5646C0;    /* accent text/links on light — 7.1:1 */
+  --mec-iris-light: #A99CFF;  /* accent text on dark — 7.8:1 */
+  --mec-bloom-ink: #8F2FA8;   /* 6.6:1 on paper */
+  --mec-ether-ink: #0E7A8A;   /* 5.4:1 on paper */
+  --mec-ether-light: #6FE3F0; /* links on dark — 11.2:1 */
+
+  /* Gradient */
+  --mec-prism: linear-gradient(45deg, #8B7CF0, #C05CD6, #3EC8D8);
+  --mec-prism-dark: linear-gradient(45deg, #9D8CFF, #D66BE8, #4FDCEB);
+  --mec-glow: radial-gradient(circle at 50% 45%, #241A4A 0%, #0E0C24 62%);
+
+  /* Type */
+  --mec-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mec-font-mono: ui-monospace, 'SF Mono', Menlo, monospace;
+  --mec-track-wordmark: 0.28em;
+  --mec-track-sub: 0.56em;
+
+  /* Focus */
+  --mec-focus-light: 2px solid #5646C0;
+  --mec-focus-dark: 2px solid #A99CFF;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mec-mark * { animation: none !important; transition: none !important; }
+}

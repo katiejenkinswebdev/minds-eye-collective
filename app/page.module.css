@@ -4,9 +4,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
   padding: 22px clamp(20px, 6vw, 88px);
-  border-bottom: 1px solid var(--mec-rule-dark-strong);
+  border-bottom: 1px solid var(--page-rule-dark-strong);
   background: var(--mec-void);
 }
 
@@ -21,8 +21,9 @@
   justify-content: center;
   min-height: 44px;
   padding: 0 22px;
-  border: 1px solid var(--mec-border-ghost);
+  border: 1px solid var(--page-border-ghost);
   border-radius: 4px;
+  color: var(--mec-paper);
   font-size: 14px;
   letter-spacing: 0.06em;
   white-space: nowrap;
@@ -32,19 +33,19 @@
 }
 
 .ghostCta:hover {
-  border-color: var(--mec-accent-dark-bg);
-  color: var(--mec-accent-dark-bg);
+  border-color: var(--mec-iris-light);
+  color: var(--mec-iris-light);
 }
 
 .ghostCta:focus-visible {
-  outline: 2px solid var(--mec-accent-dark-bg);
+  outline: 2px solid var(--mec-iris-light);
   outline-offset: 2px;
 }
 
 /* ---------- 2. Hero ---------- */
 
 .heroGlow {
-  background: var(--mec-hero-glow);
+  background: var(--page-hero-glow);
 }
 
 .hero {
@@ -61,7 +62,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 24px;
+  gap: 26px;
 }
 
 .h1 {
@@ -77,6 +78,7 @@
   line-height: 1.65;
   opacity: 0.78;
   max-width: 520px;
+  text-wrap: pretty;
 }
 
 .solidCta {
@@ -95,11 +97,11 @@
 }
 
 .solidCta:hover {
-  background: var(--mec-paper-hover);
+  background: var(--mec-haze);
 }
 
 .solidCta:focus-visible {
-  outline: 2px solid var(--mec-accent-dark-bg);
+  outline: 2px solid var(--mec-iris-light);
   outline-offset: 3px;
 }
 
@@ -129,15 +131,22 @@
   gap: 36px;
   padding: clamp(56px, 8vw, 96px) clamp(20px, 6vw, 64px);
   background: var(--mec-paper);
-  color: var(--mec-text-light-bg);
+  color: var(--mec-ink);
 }
 
+/*
+ * The design file uses opacity 0.55 here, but Ink at 55% over Paper is 3.75:1,
+ * and 13px/600 is not WCAG large text so it needs 4.5:1. The handoff README
+ * requires WCAG AA, so the accessibility rule wins over the literal value.
+ * 0.65 gives 5.13:1. The dark-surface eyebrow keeps 0.55, which is already
+ * 5.68:1 against the panel.
+ */
 .eyebrow {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
 .cardGrid {
@@ -149,15 +158,18 @@
 }
 
 .card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   padding: 28px 26px;
-  border: 1px solid var(--mec-rule-light);
+  border: 1px solid var(--page-rule-light);
   border-radius: 6px;
-  background: var(--mec-card);
+  background: var(--page-card);
   transition: border-color 200ms ease;
 }
 
 .card:hover {
-  border-color: var(--mec-accent-light-bg);
+  border-color: var(--mec-iris-ink);
 }
 
 .cardTitle {
@@ -167,7 +179,6 @@
 }
 
 .cardBody {
-  margin-top: 10px;
   font-size: 15px;
   line-height: 1.6;
   opacity: 0.75;
@@ -181,7 +192,7 @@
   padding: 0 34px;
   border-radius: 4px;
   background: var(--mec-void);
-  color: var(--mec-text-dark-bg);
+  color: var(--mec-paper);
   font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.05em;
@@ -190,19 +201,20 @@
 
 .darkCta:hover {
   background: var(--mec-depth);
+  color: #ffffff;
 }
 
 .darkCta:focus-visible {
-  outline: 2px solid var(--mec-accent-light-bg);
+  outline: 2px solid var(--mec-iris-ink);
   outline-offset: 3px;
 }
 
 /* ---------- 4. How it works ---------- */
 
 .process {
-  background: var(--mec-panel);
-  border-top: 1px solid var(--mec-rule-dark);
-  border-bottom: 1px solid var(--mec-rule-dark);
+  background: var(--page-panel);
+  border-top: 1px solid var(--page-rule-dark);
+  border-bottom: 1px solid var(--page-rule-dark);
 }
 
 .processInner {
@@ -231,7 +243,7 @@
   gap: 20px;
   align-items: baseline;
   padding: 18px 0;
-  border-bottom: 1px solid var(--mec-rule-dark-strong);
+  border-bottom: 1px solid var(--page-rule-dark-strong);
 }
 
 .step:last-child {
@@ -242,7 +254,7 @@
   min-width: 28px;
   font-family: var(--mec-font-mono);
   font-size: 13px;
-  color: var(--mec-accent-dark-bg);
+  color: var(--mec-iris-light);
 }
 
 .stepText {
@@ -269,8 +281,8 @@
   gap: 24px;
   padding: clamp(56px, 8vw, 96px) clamp(20px, 6vw, 64px);
   background: var(--mec-paper);
-  color: var(--mec-text-light-bg);
-  border-top: 1px solid var(--mec-rule-light);
+  color: var(--mec-ink);
+  border-top: 1px solid var(--page-rule-light);
 }
 
 .prismBar {
@@ -291,7 +303,7 @@
 
 .contact {
   background: var(--mec-void);
-  border-top: 1px solid var(--mec-rule-dark);
+  border-top: 1px solid var(--page-rule-dark);
 }
 
 .contactInner {
@@ -333,7 +345,7 @@
   justify-content: center;
   gap: 12px;
   padding: 24px 20px;
-  border-top: 1px solid var(--mec-rule-dark);
+  border-top: 1px solid var(--page-rule-dark);
 }
 
 .footerText {

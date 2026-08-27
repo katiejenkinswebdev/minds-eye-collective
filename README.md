@@ -1,8 +1,8 @@
 # Minds Eye Collective — landing page
 
-Single-page marketing site for Minds Eye Collective, built from the finished
-design handoff in `../design-package/`. Next.js App Router, TypeScript strict,
-CSS Modules, deployed on Vercel at **mindseyecollective.ai**.
+Single-page marketing site for Minds Eye Collective, built from the design
+handoff in `../landing-handoff/`. Next.js App Router, TypeScript strict, CSS
+Modules, deployed on Vercel at **mindseyecollective.ai**.
 
 This README is the source of truth for what works right now.
 
@@ -19,51 +19,42 @@ of persisting it, so the whole page is testable keyless.
 
 ```bash
 npm run qa       # lint, typecheck, build, brand check
-npm run build    # production build
-npm run typecheck
-npm run lint
 npm run shots    # screenshots at 375 / 768 / 1440 into test-output/
+npm run compare  # pixel-diff built output against the design file
 ```
 
 `npm run qa` ends with `scripts/check-brand.sh`, which reads the CSS that
-actually shipped and fails if Iris, Bloom or Ether is used as a text color. It
-also fails when it finds no built CSS or no color declarations, so pointing it at
-the wrong path cannot read as a pass.
+actually shipped and fails if Iris, Bloom or Ether is used as a text color,
+directly or through a token. It also fails when it finds no built CSS or no
+color declarations at all, so pointing it at the wrong path cannot read as a
+pass.
 
-`npm run shots` needs the dev or production server already running, and drives
-the installed Chrome. Override with `CHROME_PATH` if yours lives elsewhere.
+`npm run shots` needs a server already running and drives the installed Chrome.
+Override with `CHROME_PATH` if yours lives elsewhere.
 
-## What works right now
+## Status: complete and verified, not yet deployed
 
-- All six sections built to spec: header, hero, What you get, How it works,
-  About, Contact. Copy is verbatim from the handoff.
-- Responsive stacking per spec: hero collapses to one column under 768px and the
-  mark hides under 480px; How it works stacks under 768px; Contact stacks under
-  1024px.
-- `POST /api/contact` with zod validation, a honeypot, in-memory IP rate
-  limiting, a Supabase insert, and a Resend notification.
-- `robots.txt` and `sitemap.xml` via Next's metadata routes. The site is
-  indexable; there is deliberately no `noindex` header.
-- A generated 1200x630 OG image at `/opengraph-image`.
+Everything in the handoff is built. What remains is account setup and the
+deploy, none of which can happen from this repo alone. See "Going live" below.
 
-## What is NOT done yet
+**Verified:**
 
-- **The brand SVGs are missing.** `public/logos/` is empty, so the header lockup
-  and footer pupil-dot currently 404 and the favicon does not resolve. They come
-  from `../design-package/public/logos/` once that package is on disk.
-- **The hero eye contour is a placeholder.** `EYE_CONTOUR` in
-  `app/prism-mark.tsx` is an approximation, not the real brand geometry. Replace
-  it from `mark-prism-dark.svg`. The same placeholder is duplicated in
-  `app/opengraph-image.tsx` and must be updated in both places.
-- **Tokens are transcribed, not imported.** `app/theme.css` holds values copied
-  out of the handoff's README and BRAND docs. When `design-package/tokens/
-  tokens.css` lands, re-point the `--mec-*` values at the real token names. No
-  component stylesheet needs to change.
-- **The page title's dash is unverified.** The handoff arrived with mojibake in
-  place of the dash in the `<title>`. `lib/site.ts` currently uses an em dash;
-  confirm against the `.dc.html` and correct if it is an en dash.
-- Not yet verified against the design at 375 / 768 / 1440, and Lighthouse has not
-  been run.
+- Lighthouse **99 performance / 100 accessibility / 100 best practices / 100 SEO**
+  against the production build.
+- 21 end-to-end API checks pass, covering validation, honeypot, rate limiting,
+  malformed JSON, method rejection, and the static routes.
+- Pixel diff against `Minds Eye Landing Page - FINAL.dc.html` at 1440 is
+  **0.43% differing pixels**, confined to antialiasing on the header button
+  border.
+- All eight brand SVGs ship with their `<title>` elements intact.
+- No decorative accent is used as a text color anywhere in the built CSS.
+
+**The 375 and 768 diffs are large (30% and 3%) and that is expected.** The
+design file contains zero media queries: it is a desktop mockup. The responsive
+behavior exists only as prose in the handoff README, and this build implements
+it — hero collapses to one column under 768px with the mark hidden under 480px,
+How it works stacks under 768px, Contact stacks under 1024px, name and email
+stack under 560px.
 
 ## Environment
 
@@ -84,7 +75,7 @@ no policies, so only the service role can read or write it.
 `POST /api/contact` returns `200 {ok:true}` or `4xx/5xx {ok:false,error}` and
 never leaks internals to the client.
 
-1. Rate limit: 5 requests per IP per 10 minutes, then `429`.
+1. Rate limit: 5 requests per IP per 10 minutes, then `429` with `Retry-After`.
 2. Invalid JSON or a schema failure returns `400`.
 3. A filled honeypot returns `200` without doing anything, so the bot learns
    nothing.
@@ -99,9 +90,22 @@ casual spam, not a determined attacker. Upstash or Vercel KV is the upgrade.
 
 ## Deviations from the handoff, and why
 
+- **`mindseyecollective.ai` throughout.** The handoff was written against
+  `mindseyecollective.com`, which is registered to a third party through
+  Squarespace and serves an expired-site 404. Not ours.
+- **Light-surface eyebrow opacity is 0.65, not 0.55.** Ink at 55% over Paper is
+  3.75:1, and 13px/600 is not WCAG large text so it needs 4.5:1. The handoff
+  requires WCAG AA, so the accessibility rule wins over the literal value. 0.65
+  gives 5.13:1. The dark-surface eyebrow keeps 0.55, already 5.68:1. This is the
+  only place the rendered design intentionally differs from the design file.
+- **Hero mark stroke widths follow the design file, not the SVG asset.**
+  `mark-prism-dark.svg` uses a 6px contour and 1.5px inner ring; the hero in the
+  design file uses 5 and 1.2. The design file wins for this page.
+- **Hero glow follows the design file, not `--mec-glow`.** `tokens.css` defines
+  the glow at `50% 45% / 62%`; the design file and handoff README both use
+  `50% 40% / 65%`.
 - **CSS Modules instead of Tailwind.** The design is specified entirely in raw
-  CSS values. Tailwind arbitrary-value syntax would add noise without benefit on
-  a one-page site. `../design-package/CLAUDE.md` lists Tailwind as optional.
+  CSS values. `../landing-handoff/CLAUDE.md` lists Tailwind as optional.
 - **CSS scroll behavior instead of JS.** The handoff asks for `preventDefault`
   plus scripted scrolling that falls back to `auto` under reduced motion. Plain
   anchors with `scroll-behavior: smooth` and a `prefers-reduced-motion` override
@@ -110,21 +114,47 @@ casual spam, not a determined attacker. Upstash or Vercel KV is the upgrade.
 - **Next 16.3.3, not 16.2.10.** The version used across the other repos here has
   nine high-severity advisories including SSRF and unauthenticated Server
   Function disclosure. 16.3.3 audits clean.
-- **`mindseyecollective.ai` throughout.** The handoff was written against
-  `mindseyecollective.com`, which is registered to a third party and serves an
-  expired-site 404.
-- **No Upstash.** Deliberate scope call for launch. See above.
+- **No Upstash.** Deliberate scope call for launch.
+
+## Going live
+
+1. **Hover:** forward `hello@mindseyecollective.ai` to your inbox. Leave the
+   root MX records alone.
+2. **Resend:** verify `mindseyecollective.ai`. Resend puts its MX and SPF on the
+   `send.` subdomain, so it will not collide with the Hover forwarding above.
+   Create an API key.
+3. **Supabase:** create a project, run `supabase/migration.sql`, copy the URL and
+   service role key.
+4. **Vercel:** `vercel login`, import the repo, set the four environment
+   variables, deploy, and confirm the form works on the `*.vercel.app` URL.
+5. **DNS:** add `mindseyecollective.ai` and `www.` in Vercel, then put the exact
+   A and CNAME records Vercel shows into Hover, replacing the parking-page A
+   record. Copy those values fresh from the dashboard rather than from memory.
+6. Confirm SSL, then submit the sitemap in Google Search Console.
+
+## Tokens
+
+`app/tokens.css` is the brand token file, copied verbatim from
+`../landing-handoff/tokens/tokens.css`. Do not edit it; re-copy it if the brand
+system changes.
+
+`app/theme.css` holds only `--page-*` values the design uses that the brand
+tokens do not define: the card white, the error pink, the hairline alphas, and
+the hero glow. The prefix keeps it obvious which names are brand and which are
+page-local. No component stylesheet contains a raw hex value.
 
 ## Structure
 
 ```
 app/
-  layout.tsx            metadata, fonts, token + global CSS imports
+  layout.tsx            metadata, token + theme + global CSS imports
   page.tsx              the whole page, a server component
   page.module.css       all six sections
   contact-form.tsx      the one client component
   prism-mark.tsx        hero mark SVG
   opengraph-image.tsx   generated 1200x630 OG image
+  tokens.css            brand tokens, copied verbatim
+  theme.css             page-local values only
   robots.ts, sitemap.ts
   api/contact/route.ts
 lib/
@@ -133,5 +163,10 @@ lib/
   rate-limit.ts         in-memory IP limiter
   leads.ts              Supabase insert
   notify.ts             Resend notification
+scripts/
+  check-brand.sh        fails the build on a banned text color
+  shots.ts              breakpoint screenshots
+  compare.ts            pixel diff against the design file
 supabase/migration.sql
+public/logos/           eight brand SVGs, copied as-is
 ```

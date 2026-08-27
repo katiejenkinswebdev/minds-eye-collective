@@ -32,7 +32,7 @@ html {
 
 body {
   background: var(--mec-void);
-  color: var(--mec-text-dark-bg);
+  color: var(--mec-paper);
   font-family: var(--mec-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -44,9 +44,15 @@ svg {
   max-width: 100%;
 }
 
+/* Matches the design file's base link treatment. Every CTA on the page sets
+   its own color, so this only governs links added later in prose. */
 a {
-  color: inherit;
+  color: var(--mec-ether-light);
   text-decoration: none;
+}
+
+a:hover {
+  color: var(--mec-iris-light);
 }
 
 button,
