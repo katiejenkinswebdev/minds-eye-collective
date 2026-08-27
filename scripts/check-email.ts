@@ -33,8 +33,19 @@ async function main() {
   loadEnvLocal();
 
   const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL;
   const from = process.env.CONTACT_FROM_EMAIL;
+
+  // Optional recipient override: npm run check-email -- someone@example.com
+  const override = process.argv[2];
+  const to = override ?? process.env.CONTACT_TO_EMAIL;
+
+  // The handoff was written against mindseyecollective.com, which belongs to a
+  // third party. Refuse to send there rather than mail a stranger.
+  if (to && /@mindseyecollective\.com$/i.test(to)) {
+    console.error(`FAIL  ${to} is on mindseyecollective.com, which is not our`);
+    console.error("      domain. Ours is mindseyecollective.ai. Refusing to send.");
+    process.exit(1);
+  }
 
   if (!apiKey) {
     console.log("SKIP  RESEND_API_KEY is not set. Leads will be stored in");
