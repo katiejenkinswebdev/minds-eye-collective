@@ -14,9 +14,9 @@ export const SITE = {
     "Custom-built AI systems and hands-on enablement for organizations that want outcomes, not experiments.",
   /**
    * Shown publicly in the contact form's error fallback copy, so it must be a
-   * mailbox that actually exists. hello@ bounced when tested and Resend
-   * suppressed it; katie@ delivers. Switch back to hello@ only once forwarding
-   * is set up AND a test send to it reports "delivered".
+   * mailbox that actually exists. Verified delivering on 2026-08-27 via
+   * `npm run check-email -- hello@mindseyecollective.ai`. Re-test with that
+   * command before ever changing this value.
    */
-  contactEmail: "katie@mindseyecollective.ai",
+  contactEmail: "hello@mindseyecollective.ai",
 } as const;
