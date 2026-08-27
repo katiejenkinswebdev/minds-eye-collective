@@ -70,8 +70,27 @@ See `.env.example`. Every variable is optional in development.
 | `CONTACT_TO_EMAIL` | Where leads are delivered. Hover forwarding address. |
 | `CONTACT_FROM_EMAIL` | Sender. Must be on the Resend-verified domain. |
 
-Apply `supabase/migration.sql` to create the `leads` table. It enables RLS with
-no policies, so only the service role can read or write it.
+### Database
+
+Migrations live in `supabase/migrations/`. The first one creates the `leads`
+table with RLS enabled and no policies, so only the service role can read or
+write it.
+
+Two ways to apply it:
+
+```bash
+# CLI. Needs a personal access token and the database password.
+export SUPABASE_ACCESS_TOKEN=...          # dashboard > Account > Access Tokens
+npx supabase link --project-ref dflmdjjiptktzeanifhd
+npx supabase db push
+```
+
+Or paste the migration into the dashboard SQL editor, which needs no
+credentials at all. For a single table that is the shorter path; the CLI earns
+its keep once migrations start stacking up.
+
+`supabase/config.toml` maps the local stack to 55321 and up, because the
+default 54xxx range is already taken on this machine.
 
 ## How the contact form behaves
 
@@ -133,8 +152,8 @@ casual spam, not a determined attacker. Upstash or Vercel KV is the upgrade.
 2. **Resend:** verify `mindseyecollective.ai`. Resend puts its MX and SPF on the
    `send.` subdomain, so it will not collide with the Hover forwarding above.
    Create an API key.
-3. **Supabase:** create a project, run `supabase/migration.sql`, copy the URL and
-   service role key.
+3. **Supabase:** create a project, apply the migration (see Database above), copy
+   the project URL and the `service_role` secret key.
 4. **Vercel:** `vercel login`, import the repo, set the four environment
    variables, deploy, and confirm the form works on the `*.vercel.app` URL.
 5. **DNS:** add `mindseyecollective.ai` and `www.` in Vercel, then put the exact
@@ -177,6 +196,8 @@ scripts/
   check-brand.sh        fails the build on a banned text color
   shots.ts              breakpoint screenshots
   compare.ts            pixel diff against the design file
-supabase/migration.sql
+supabase/
+  config.toml           local stack on 55321+, not the taken 54xxx range
+  migrations/           timestamped, applied with `supabase db push`
 public/logos/           eight brand SVGs, copied as-is
 ```
