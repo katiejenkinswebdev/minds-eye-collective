@@ -128,6 +128,60 @@ async function main() {
     .select("*", { count: "exact", head: true });
 
   console.log(`\nleads table is ready. Real rows currently stored: ${count ?? 0}`);
+
+  // 5. Can the public key read the table?
+  //
+  // The secret key bypasses RLS, so nothing above proves RLS is enforcing. Only
+  // a request made as the public role can. Without that key this check is
+  // skipped, and skipped is reported as skipped, never as a pass.
+  const publicKey =
+    process.env.SUPABASE_PUBLISHABLE_KEY ?? process.env.SUPABASE_ANON_KEY;
+
+  console.log();
+  if (!publicKey) {
+    console.log(
+      "SKIP  RLS enforcement unverified: set SUPABASE_PUBLISHABLE_KEY in"
+    );
+    console.log(
+      "      .env.local to prove the public role cannot read leads."
+    );
+    return;
+  }
+
+  const anon = createClient(url, publicKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+
+  const { data: leaked, error: anonError } = await anon
+    .from("leads")
+    .select("id, email")
+    .limit(1);
+
+  if (leaked && leaked.length > 0) {
+    console.error("FAIL  the public key can READ leads. The table is exposed.");
+    console.error("      Run: alter table public.leads enable row level security;");
+    console.error("      and: revoke all on public.leads from anon, authenticated;");
+    process.exit(1);
+  }
+
+  if (anonError) {
+    console.log(`PASS  public key refused: ${anonError.message}`);
+  } else {
+    console.log("PASS  public key returned no rows");
+  }
+
+  // An empty read is ambiguous on an empty table, so try a write too.
+  const { error: anonInsert } = await anon.from("leads").insert({
+    name: "anon probe",
+    email: `anon-probe+${Date.now()}@example.com`,
+    outcome: "This insert must be rejected.",
+  });
+
+  if (!anonInsert) {
+    console.error("FAIL  the public key can WRITE to leads. Anyone can spam it.");
+    process.exit(1);
+  }
+  console.log(`PASS  public key cannot write: ${anonInsert.message}`);
 }
 
 main().catch((error) => {
