@@ -11,7 +11,8 @@
     "qa": "npm run lint && npm run typecheck && npm run build && bash scripts/check-brand.sh",
     "shots": "tsx scripts/shots.ts",
     "compare": "tsx scripts/compare.ts",
-    "check-db": "tsx scripts/check-db.ts"
+    "check-db": "tsx scripts/check-db.ts",
+    "e2e": "tsx scripts/e2e-contact.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
