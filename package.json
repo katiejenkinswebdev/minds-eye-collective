@@ -12,7 +12,8 @@
     "shots": "tsx scripts/shots.ts",
     "compare": "tsx scripts/compare.ts",
     "check-db": "tsx scripts/check-db.ts",
-    "e2e": "tsx scripts/e2e-contact.ts"
+    "e2e": "tsx scripts/e2e-contact.ts",
+    "check-email": "tsx scripts/check-email.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
