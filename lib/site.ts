@@ -12,6 +12,11 @@ export const SITE = {
   title: "Minds Eye Collective — Custom AI systems and enablement",
   description:
     "Custom-built AI systems and hands-on enablement for organizations that want outcomes, not experiments.",
-  /** Shown publicly in the contact form's error fallback copy. */
-  contactEmail: "hello@mindseyecollective.ai",
+  /**
+   * Shown publicly in the contact form's error fallback copy, so it must be a
+   * mailbox that actually exists. hello@ bounced when tested and Resend
+   * suppressed it; katie@ delivers. Switch back to hello@ only once forwarding
+   * is set up AND a test send to it reports "delivered".
+   */
+  contactEmail: "katie@mindseyecollective.ai",
 } as const;
