@@ -1,0 +1,50 @@
+/**
+ * Semantic token layer. Every rule in the app reads these names, never a raw
+ * hex, so when design-package/tokens/tokens.css arrives the right-hand sides
+ * get re-pointed at the real token names and nothing else has to change.
+ *
+ * Values transcribed from README.md and BRAND.md (Identity v2.1 "Prism").
+ */
+:root {
+  /* Surfaces */
+  --mec-void: #0e0c24;
+  --mec-void-lift: #241a4a; /* hero radial centre */
+  --mec-paper: #f6f5fb;
+  --mec-card: #ffffff;
+  --mec-depth: #3e3480; /* dark CTA hover */
+  --mec-paper-hover: #c9c3f2; /* light CTA hover */
+
+  /* Text. Only these are ever allowed as a color. */
+  --mec-text-dark-bg: #f6f5fb;
+  --mec-text-light-bg: #1c1936;
+  --mec-accent-dark-bg: #a99cff; /* Iris Light */
+  --mec-accent-light-bg: #5646c0; /* Iris Ink */
+  --mec-link-dark-bg: #6fe3f0; /* Ether Light */
+  --mec-error: #ffb4c0;
+
+  /* Decorative only. BRAND.md forbids these as a text color. */
+  --mec-iris: #8b7cf0;
+  --mec-bloom: #c05cd6;
+  --mec-ether: #3ec8d8;
+
+  /* Hairlines, borders and washes */
+  --mec-rule-dark: rgba(246, 245, 251, 0.12);
+  --mec-rule-dark-strong: rgba(246, 245, 251, 0.14);
+  --mec-rule-light: rgba(28, 25, 54, 0.12);
+  --mec-border-ghost: rgba(246, 245, 251, 0.35);
+  --mec-border-field: rgba(246, 245, 251, 0.28);
+  --mec-fill-field: rgba(246, 245, 251, 0.06);
+  --mec-panel: rgba(246, 245, 251, 0.04);
+
+  /* Type */
+  --mec-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --mec-font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* The one sanctioned gradient. One element per surface, never on type. */
+  --mec-prism: linear-gradient(45deg, #8b7cf0, #c05cd6, #3ec8d8);
+  --mec-hero-glow: radial-gradient(
+    circle at 50% 40%,
+    #241a4a 0%,
+    #0e0c24 65%
+  );
+}
