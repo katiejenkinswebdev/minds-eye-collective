@@ -51,6 +51,17 @@
   resize: vertical;
 }
 
+/*
+ * iOS Safari auto-zooms the page when a focused field is under 16px, which on
+ * an iPhone throws the layout sideways as soon as someone taps Name. The design
+ * specifies 15px, so desktop keeps it and only touch widths get 16px.
+ */
+@media (max-width: 767px) {
+  .input {
+    font-size: 16px;
+  }
+}
+
 .honeypot {
   position: absolute;
   left: -9999px;

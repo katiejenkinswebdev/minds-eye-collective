@@ -40,7 +40,10 @@ deploy, none of which can happen from this repo alone. See "Going live" below.
 **Verified:**
 
 - Lighthouse **99 performance / 100 accessibility / 100 best practices / 100 SEO**
-  against the production build.
+  against the production build. Lighthouse runs mobile emulation by default, so
+  these are mobile scores.
+- **No horizontal overflow at 320, 360, 375, 390, 414, 480, 560 or 768px**, and
+  no form field under 16px at any touch width.
 - 21 end-to-end API checks pass, covering validation, honeypot, rate limiting,
   malformed JSON, method rejection, and the static routes.
 - Pixel diff against `Minds Eye Landing Page - FINAL.dc.html` at 1440 is
@@ -96,8 +99,15 @@ casual spam, not a determined attacker. Upstash or Vercel KV is the upgrade.
 - **Light-surface eyebrow opacity is 0.65, not 0.55.** Ink at 55% over Paper is
   3.75:1, and 13px/600 is not WCAG large text so it needs 4.5:1. The handoff
   requires WCAG AA, so the accessibility rule wins over the literal value. 0.65
-  gives 5.13:1. The dark-surface eyebrow keeps 0.55, already 5.68:1. This is the
-  only place the rendered design intentionally differs from the design file.
+  gives 5.13:1. The dark-surface eyebrow keeps 0.55, already 5.68:1.
+- **Form fields are 16px under 768px, 15px above.** iOS Safari auto-zooms the
+  page when a focused field is under 16px, which throws the layout sideways the
+  moment someone taps Name on an iPhone. The design's 15px is kept on desktop.
+- **Header shrinks below 400px.** At 320px the 184px lockup plus the ghost CTA
+  overflowed the viewport by 35px and put the page into horizontal scroll. The
+  lockup drops to 34px and the CTA tightens. Nothing upstream covers this: the
+  design file has no media queries and the handoff only claims verification at
+  375 and up.
 - **Hero mark stroke widths follow the design file, not the SVG asset.**
   `mark-prism-dark.svg` uses a 6px contour and 1.5px inner ring; the hero in the
   design file uses 5 and 1.2. The design file wins for this page.

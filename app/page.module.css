@@ -110,6 +110,24 @@
   justify-content: center;
 }
 
+/*
+ * Below ~400px the 184px lockup, the gap and the ghost CTA no longer fit
+ * between the header's side padding, and the CTA pushes the page into
+ * horizontal scroll. The design file has no media queries and the handoff only
+ * claims verification at 375, so nothing upstream covers this. Shrinking the
+ * lockup and tightening the CTA keeps both visible with no overflow at 320px.
+ */
+@media (max-width: 400px) {
+  .lockup {
+    height: 34px;
+  }
+
+  .ghostCta {
+    padding: 0 14px;
+    font-size: 13px;
+  }
+}
+
 @media (max-width: 767px) {
   .hero {
     grid-template-columns: 1fr;
